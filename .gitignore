@@ -1,0 +1,5 @@
+#Note Book Checkpoints
+/model/.ipynb_checkpoints
+
+#Dataset Folder
+/model/dataset/
