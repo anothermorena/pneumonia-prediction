@@ -7,3 +7,7 @@
 
 #Environments
 /server/venv/
+
+
+#Caches
+/server/__pycache__
