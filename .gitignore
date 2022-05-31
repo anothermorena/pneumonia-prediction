@@ -11,3 +11,7 @@
 
 #Caches
 /server/__pycache__
+
+
+#Node Modules
+/web-client/node_modules/
