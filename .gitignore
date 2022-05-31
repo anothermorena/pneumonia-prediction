@@ -3,3 +3,7 @@
 
 #Dataset Folder
 /model/dataset/
+
+
+#Environments
+/server/venv/
