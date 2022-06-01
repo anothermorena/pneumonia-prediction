@@ -20,7 +20,7 @@ const Header = () => {
 
   return (
     <Box pos="relative">
-      <chakra.header ref={ref} shadow={y > height ? "sm" : undefined} transition="box-shadow 0.2s" bg={bg} borderTop="6px solid" borderTopColor="blue.400" w="full" overflowY="hidden">
+      <chakra.header ref={ref} shadow={y > height ? "sm" : undefined} transition="box-shadow 0.2s" bg={bg} borderBottom="6px solid" borderBottomColor="blue.400" w="full" overflowY="hidden">
         <chakra.div h="4.5rem" mx="auto" maxW="1200px">
 
           <Flex w="full" h="full" px="6" align="center" justify="space-between">

@@ -9,7 +9,7 @@ const ImagePreview = ({imageUrl,setIsUploaded, setImageUrl,prediction,loading}) 
         <Box display="grid" mt={25} alignItems="center" h={500} w={350} bg = "#FBFBFF" borderRadius={20}> 
           <Center display="flex" flexWrap="wrap" alignItems="center"> 
             <VStack>
-                <Image id="uploaded-image" src={imageUrl} draggable={false} alt="uploaded-img" /> <br/>
+                <Image id="uploaded-image" src={imageUrl} draggable={false} alt="uploaded-img" borderRadius={10} /> <br/>
                 {loading ? (
                 <>
                 <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl'/> 
