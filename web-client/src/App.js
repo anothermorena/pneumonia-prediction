@@ -31,22 +31,24 @@ function App() {
         //read the image as a url for preview
         reader.readAsDataURL(e.target.files[0]);
 
-        //prepare form data to send to the 
+        //prepare form data to send to the api for inference
         const formData =  new FormData();
         formData.append("file", e.target.files[0], e.target.files[0].name);
 
+        //make the api call to make the inference
         try {
           const response = await axios.post(PREDICTION_URL,formData,
               {
                   headers: { 'Content-Type': 'multipart/form-data' }
               }
           );
-          const prediction = response?.data?.prediction;
-              
+          //set the prediction result
+          const prediction = response?.data?.prediction; 
           setPrediction(prediction);
           setLoading(false);
           setErrMsg("");
-
+        
+        //if any error occurred,catch it and display a message to the user
       } catch (err) {
           if (!err?.response) {
               setErrMsg('No server response. Please reload the page and try again');
@@ -76,7 +78,7 @@ function App() {
   return (
    <>
    <Header/>
-   {/*If no image is uploaded render the upload form else show preview and results */}
+   {/*If no image is uploaded render the upload form else show the uploaded image preview and inference results */}
    {!isUploaded ? (
    <Center w='100%' bg="blue.50" h="100%" display="grid" alignItems="center"> 
     <Box display="flex" flexDirection="column" bg="#fff" my={40} px={15} pb={18} boxShadow="xs" alignItems="center" borderRadius={20}>

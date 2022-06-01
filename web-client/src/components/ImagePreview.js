@@ -1,4 +1,3 @@
-
 import { Center,Box,Image, Button, VStack, Text, Spinner} from '@chakra-ui/react'
 
 const ImagePreview = ({imageUrl,setIsUploaded, setImageUrl,prediction,loading}) => {
