@@ -1,30 +1,77 @@
-import { useState } from "react";
-import { Center,Box, Image, Text, Input} from '@chakra-ui/react'
+import { useState, useEffect} from "react";
+import { Center,Box, Image, Text, Input,useToast} from '@chakra-ui/react'
 import CloudUpload from "./assets/cloud_upload.jpg";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import ImagePreview from "./components/ImagePreview";
+import axios from './api/axios';
 
+//The api end point we need to call to make our predictions 
+const PREDICTION_URL = '/predict';
 
 function App() {
 
-  const [image, setImage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [isUploaded, setIsUploaded] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [prediction, setPrediction] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const toast = useToast()
 
-  const handleImageChange = (e) => {
-    //check if we have a file uploaded
-    if (e.target.files && e.target.files[0]) {
-      let reader = new FileReader();
+  const handleImageChange = async (e) => {
+      setLoading(true);
+      //check if we have a file uploaded
+      if (e.target.files && e.target.files[0]) {
+        let reader = new FileReader();
 
-      reader.onload = (e) => {
-        setImage(e.target.result);
-        setIsUploaded(true);
-      };
+        reader.onload = (e) => {
+          setImageUrl(e.target.result);
+          setIsUploaded(true);
+        };
+        //read the image as a url for preview
+        reader.readAsDataURL(e.target.files[0]);
 
-      reader.readAsDataURL(e.target.files[0]);
+        //prepare form data to send to the 
+        const formData =  new FormData();
+        formData.append("file", e.target.files[0], e.target.files[0].name);
+
+        try {
+          const response = await axios.post(PREDICTION_URL,formData,
+              {
+                  headers: { 'Content-Type': 'multipart/form-data' }
+              }
+          );
+          const prediction = response?.data?.prediction;
+              
+          setPrediction(prediction);
+          setLoading(false);
+          setErrMsg("");
+
+      } catch (err) {
+          if (!err?.response) {
+              setErrMsg('No server response. Please reload the page and try again');
+          } else {
+              setErrMsg('Making an inference failed. Please reload the page and try again');
+          }
+          
+          }
+      }
   
     }
-  }
+    //if there is an error message, show it as a toast whenever the errMsg state value changes 
+    useEffect(() => {
+      if(errMsg){
+          toast({
+              title: "An Error Occurred",
+              description: errMsg,
+              status: "error",
+              duration: 15000,
+              position: "bottom",
+              isClosable: true,
+            });
+      }
+    }, [errMsg]);
+  
   
   return (
    <>
@@ -43,7 +90,7 @@ function App() {
                 draggable={"false"}
                 alt="placeholder"
               />
-              <Text color="#444" ml={20}>Click to an upload image</Text>
+              <Text color="#444" ml={14}>Click to upload a chest x-ray image</Text>
             </label>
 
             <Input
@@ -57,10 +104,7 @@ function App() {
         </Box>
         </Box>
     </Center>
-    ) : (
-    <ImagePreview image={image} setIsUploaded={setIsUploaded} setImage={setImage}/>
-
-    )}
+    ) : (<ImagePreview imageUrl={imageUrl} setIsUploaded={setIsUploaded} setImageUrl={setImageUrl} prediction={prediction} loading={loading}/>)}
    <Footer/>
    </>
   );

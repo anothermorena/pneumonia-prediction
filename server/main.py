@@ -5,7 +5,7 @@ Created on Wed May 18 18:04:51 2022
 
 """
 
-#pip install fastapi uvicorn tensorflow numpy, Pillow, opencv-python in your virtual environment
+#pip install fastapi uvicorn tensorflow numpy, Pillow, opencv-python,python-multipart in your virtual environment
 
 #1. Library imports
 from fastapi import FastAPI, File, UploadFile
@@ -70,7 +70,7 @@ async def predict(file: UploadFile = File(...)):
     prediction = cnn.predict(image)
     
     if (int(prediction[0].round()) == 0):
-        return {"prediction": "This patient has pneumonia. Please enroll him or her patient for therapy."}
+        return {"prediction": "This patient has pneumonia 😔."}
 
     else:
        return {"prediction": "This patient do not have pneumonia🙂."}

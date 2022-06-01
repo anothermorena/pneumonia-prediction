@@ -1,7 +1,7 @@
 
-import { Center,Box,Image, Button, VStack, Text} from '@chakra-ui/react'
+import { Center,Box,Image, Button, VStack, Text, Spinner} from '@chakra-ui/react'
 
-const ImagePreview = ({image,setIsUploaded, setImage}) => {
+const ImagePreview = ({imageUrl,setIsUploaded, setImageUrl,prediction,loading}) => {
 
   return (
     <Center w='100%' bg="blue.50" h="100%" display="grid" alignItems="center"> 
@@ -9,9 +9,18 @@ const ImagePreview = ({image,setIsUploaded, setImage}) => {
         <Box display="grid" mt={25} alignItems="center" h={500} w={350} bg = "#FBFBFF" borderRadius={20}> 
           <Center display="flex" flexWrap="wrap" alignItems="center"> 
             <VStack>
-                <Image id="uploaded-image" src={image} draggable={false} alt="uploaded-img" /> <br/>
-                <Text>Prediction Results</Text>
-                <Button colorScheme='blue' onClick={() => {setIsUploaded(false); setImage(null);}}>Make Another Prediction</Button>
+                <Image id="uploaded-image" src={imageUrl} draggable={false} alt="uploaded-img" /> <br/>
+                {loading ? (
+                <>
+                <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl'/> 
+                <Text>Making an inference....</Text>
+                </>):(
+                <>
+                <Text>Inference Results:</Text>
+                <Text>{prediction}</Text>
+                <Button colorScheme='blue' onClick={() => {setIsUploaded(false); setImageUrl(null);}}>Make Another Inference</Button>
+                </>
+                )}
             </VStack>
           </Center>
         </Box>
