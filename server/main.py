@@ -8,14 +8,14 @@ Created on Wed May 18 18:04:51 2022
 #pip install fastapi uvicorn tensorflow numpy, Pillow, opencv-python,python-multipart in your virtual environment
 
 #1. Library imports
-from fastapi import FastAPI, File, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
+import cv2
 import uvicorn
 import numpy as np
-from io import BytesIO
 from PIL import Image
+from io import BytesIO
 import tensorflow as tf
-import cv2
+from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 
 #2. Create the app object
 app = FastAPI()
