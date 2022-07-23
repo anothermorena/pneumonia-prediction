@@ -1,15 +1,15 @@
-import { useState, useEffect} from "react";
-import { Center,Box, Image, Text, Input,useToast} from '@chakra-ui/react'
-import CloudUpload from "./assets/cloud_upload.jpg";
+import axios from './api/axios';
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import { useState, useEffect} from "react";
+import CloudUpload from "./assets/cloud_upload.jpg";
 import ImagePreview from "./components/ImagePreview";
-import axios from './api/axios';
+import { Center,Box, Image, Text, Input,useToast} from '@chakra-ui/react'
 
 //The api end point we need to call to make our predictions 
 const PREDICTION_URL = '/predict';
 
-function App() {
+const App = () => {
 
   const [imageUrl, setImageUrl] = useState("");
   const [isUploaded, setIsUploaded] = useState(false);
@@ -78,7 +78,6 @@ function App() {
   return (
    <>
    <Header/>
-   {/*If no image is uploaded render the upload form else show the uploaded image preview and inference results */}
    {!isUploaded ? (
    <Center w='100%' bg="blue.50" h="100%" display="grid" alignItems="center"> 
     <Box display="flex" flexDirection="column" bg="#fff" my={40} px={15} pb={18} boxShadow="xs" alignItems="center" borderRadius={20}>
