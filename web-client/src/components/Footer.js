@@ -13,7 +13,7 @@ const Footer = () => {
             <Icon as={FaLinkedin} boxSize="5" viewBox="0 0 24 24" fill="currentColor"/>
           </chakra.a>
 
-          <chakra.a href="https://github.com/anothermorena" target="_blank" m={2} color="gray.600" _hover={{color: "blue.400"}} aria-label="Github">
+          <chakra.a href="https://github.com/anothermorena/pneumonia-prediction" target="_blank" m={2} color="gray.600" _hover={{color: "blue.400"}} aria-label="Github">
             <Icon as={FaGithub} boxSize="5"  viewBox="0 0 24 24" fill="currentColor" />
           </chakra.a>
           
