@@ -32,6 +32,19 @@ def download_blob(bucket_name, source_blob_name, destination_file_name):
 
 #4. the function that will be deployed as gcf to make inferences
 def predict(request):
+    # Set CORS headers for the preflight request
+    if request.method == 'OPTIONS':
+        # Allows GET requests from any origin with the Content-Type
+        # header and caches preflight response for an 3600s
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+
+        return ('', 204, headers)
+
     global model
 
     if model is None:
@@ -53,9 +66,17 @@ def predict(request):
     image = image/255 
     
     prediction = model.predict(image)
+
+    # Set CORS headers for the main request
+    headers = {
+        'Content-Type':'multipart/form-data',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    }
     
     if (int(prediction[0].round()) == 0):
-        return {"prediction": "This patient has pneumonia 😔."}
+        return ({"prediction": "This patient has pneumonia 😔."}, 200, headers)
 
     else:
-       return {"prediction": "This patient do not have pneumonia🙂."}
+       return ({"prediction": "This patient do not have pneumonia🙂."}, 200, headers)
