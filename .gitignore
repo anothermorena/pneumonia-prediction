@@ -15,3 +15,6 @@
 
 #Node Modules
 /client/node_modules/
+
+#Vercel Dir
+/client/.vercel/
